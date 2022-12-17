@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 type Props = {
@@ -14,20 +14,23 @@ const CustomAddTaskButtom: FC<Props> = ({ text, onPress }) => {
 				start={{ x: 0, y: 0 }}
 				end={{ x: 1, y: 1 }}
 				colors={["#67B8F0", "#51D8D0"]}
-				style={{
-					height: 50,
-					width: "100%",
-					borderRadius: 20,
-					justifyContent: "center",
-					alignItems: "center",
-				}}
+				style={styles.button}
 			>
-				<Text style={{ fontSize: 18, color: "white", alignSelf: "center" }}>
-					{text}
-				</Text>
+				<Text style={styles.buttomTest}>{text}</Text>
 			</LinearGradient>
 		</TouchableOpacity>
 	);
 };
 
 export default CustomAddTaskButtom;
+
+const styles = StyleSheet.create({
+	button: {
+		height: 50,
+		width: "100%",
+		borderRadius: 20,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	buttomTest: { fontSize: 18, color: "white", alignSelf: "center" },
+});

@@ -7,14 +7,13 @@ import { useColorScheme } from "react-native";
 import Palette from "./src/styles/Palette";
 import CustomBackButtom from "./src/components/custom/CustomBackButtom";
 import { store } from "./src/redux/store";
-import { Provider} from "react-redux";
+import { Provider } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
 	const scheme = useColorScheme() === "dark";
 
-	
 	return (
 		<Provider store={store}>
 			<NavigationContainer>

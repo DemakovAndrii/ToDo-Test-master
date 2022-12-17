@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Month from "../data/month.json";
 
@@ -53,43 +53,47 @@ const TopCalendar = () => {
 			start={{ x: 0, y: 0 }}
 			end={{ x: 1, y: 1 }}
 			colors={["#7F9CFA", "#51D2E7"]}
-			style={{
-				justifyContent: "center",
-				alignItems: "center",
-			}}
+			style={styles.calendarItem}
 		>
-			<View style={{ height: 170 }}>
-				<View
-					style={{ alignItems: "center", paddingTop: 15, paddingBottom: 10 }}
-				>
-					<Text style={{ fontSize: 20, color: "white" }}>
-						{fMonth}, {year}
-					</Text>
-				</View>
-				<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-					<View style={{ flex: 1, flexDirection: "row" }}>
-						{Month.map(({ date, day }, index) => {
-							return (
-								<View key={index} style={{ alignItems: "center" }}>
-									<Text
-										style={{
-											fontSize: 56,
-											fontWeight: "700",
-											color: "white",
-											paddingHorizontal: 20,
-										}}
-									>
-										{date}
-									</Text>
-									<Text style={{ fontSize: 14, color: "white" }}> {day}</Text>
-								</View>
-							);
-						})}
-					</View>
-				</ScrollView>
+			<View style={styles.monthContainer}>
+				<Text style={styles.monthText}>
+					{fMonth}, {year}
+				</Text>
 			</View>
+			{/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+				<View style={styles.datesContainer}>
+					{Month.map(({ date, day }, index) => {
+						return (
+							<View key={index} style={styles.oneDayCont}>
+								<Text style={styles.date}>{date}</Text>
+								<Text style={styles.day}> {day}</Text>
+							</View>
+						);
+					})}
+				</View>
+			</ScrollView> */}
+			<Text style={styles.date}>{day}</Text>
 		</LinearGradient>
 	);
 };
 
 export default TopCalendar;
+
+const styles = StyleSheet.create({
+	calendarItem: {
+		justifyContent: "center",
+		alignItems: "center",
+		height: 170,
+	},
+	monthContainer: { alignItems: "center", paddingTop: 15, paddingBottom: 10 },
+	monthText: { fontSize: 20, color: "white" },
+	datesContainer: { flex: 1, flexDirection: "row" },
+	oneDayCont: { alignItems: "center" },
+	date: {
+		fontSize: 56,
+		fontWeight: "700",
+		color: "white",
+		paddingHorizontal: 20,
+	},
+	day: { fontSize: 14, color: "white" },
+});

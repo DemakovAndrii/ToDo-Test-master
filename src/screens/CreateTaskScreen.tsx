@@ -10,6 +10,7 @@ import {
 	Alert,
 	Modal,
 	Pressable,
+	TextInput,
 } from "react-native";
 import Palette from "../styles/Palette";
 import CustomInput from "../components/custom/CustomInput";
@@ -21,10 +22,11 @@ import { useNavigation } from "@react-navigation/native";
 
 const CreateTaskScreen = () => {
 	const scheme = useColorScheme() === "dark";
-	const bgStyle = {
+	const themeStyle = {
 		backgroundColor: scheme
 			? Palette.darkTh.backGround
 			: Palette.lightTh.backGround,
+		color: scheme ? Palette.darkTh.text : Palette.lightTh.text,
 	};
 
 	const data = new Date();
@@ -43,68 +45,60 @@ const CreateTaskScreen = () => {
 		if (value !== "") {
 			allTask.push({ date: day, task: value });
 			dispatch(add({ day, task: value }));
-		}
-		setValue("");
 
-		setTimeout(() => {
+			setValue("");
+
 			setModalVisible(true);
-		}, 500);
 
-		setTimeout(() => {
-			setModalVisible(false);
-			navigation.navigate("Home");
-		}, 3000);
+			setTimeout(() => {
+				setModalVisible(false);
+				navigation.navigate("Home");
+			}, 1000);
+		}
 	};
 
 	return (
 		<SafeAreaView
-			style={{
-				backgroundColor: bgStyle.backgroundColor,
-				paddingHorizontal: 10,
-				height: "100%",
-			}}
+			style={[
+				styles.safeAreaView,
+				{ backgroundColor: themeStyle.backgroundColor },
+			]}
 		>
 			<StatusBar
-				backgroundColor={bgStyle.backgroundColor}
+				backgroundColor={themeStyle.backgroundColor}
 				showHideTransition={"slide"}
 				barStyle={scheme ? "light-content" : "dark-content"}
 			/>
 			<Text
-				style={{
-					color: scheme ? Palette.darkTh.text : Palette.lightTh.text,
-					fontSize: 28,
-				}}
+				style={[
+					styles.text,
+					{
+						color: themeStyle.color,
+					},
+				]}
 			>
 				task
 			</Text>
 			<CustomInput setValue={setValue} value={value} />
 			<Text
-				style={{
-					color: scheme ? Palette.darkTh.text : Palette.lightTh.text,
-					fontSize: 28,
-				}}
+				style={[
+					styles.text,
+					{
+						color: themeStyle.color,
+					},
+				]}
 			>
 				date
 			</Text>
-			<Text
-				style={{
-					color: scheme ? Palette.darkTh.text : Palette.lightTh.text,
-					fontSize: 28,
-					paddingBottom: 50,
-				}}
-			>
-				{day}
-			</Text>
+			<Text style={[styles.date, { color: themeStyle.color }]}>{day}</Text>
 			<CustomAddTaskButtom text="Add Task" onPress={addTask} />
-			<View style={styles.centeredView}>
-				<Modal animationType="fade" transparent={true} visible={modalVisible}>
-					<View style={styles.centeredView}>
-						<View style={styles.modalView}>
-							<Text style={styles.modalText}>Your shit is added</Text>
-						</View>
+			<Modal animationType="fade" transparent={true} visible={modalVisible}>
+				<View style={styles.modalPosition}>
+					<View style={styles.modalView}>
+						<Text style={styles.modalText}>Your task is added</Text>
 					</View>
-				</Modal>
-			</View>
+				</View>
+			</Modal>
 		</SafeAreaView>
 	);
 };
@@ -112,46 +106,35 @@ const CreateTaskScreen = () => {
 export default CreateTaskScreen;
 
 const styles = StyleSheet.create({
-	centeredView: {
+	safeAreaView: { paddingHorizontal: 10, height: "100%" },
+	text: { fontSize: 28, paddingBottom: 10 },
+	date: { fontSize: 28, paddingBottom: 50 },
+
+	modalPosition: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 22,
 	},
 	modalView: {
-		margin: 20,
-		backgroundColor: "white",
+		backgroundColor: "#f0f0f0",
 		borderRadius: 20,
-		padding: 35,
+		paddingTop: 20,
+		paddingBottom: 10,
+		paddingHorizontal: 20,
 		alignItems: "center",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 4,
-		elevation: 5,
-	},
-	button: {
-		borderRadius: 20,
-		padding: 10,
-		elevation: 2,
-	},
-	buttonOpen: {
-		backgroundColor: "#F194FF",
-	},
-	buttonClose: {
-		backgroundColor: "#2196F3",
-	},
-	textStyle: {
-		color: "white",
-		fontWeight: "bold",
-		textAlign: "center",
+		// shadowColor: "#000",
+		// shadowOffset: {
+		// 	width: 0,
+		// 	height: 2,
+		// },
+		// shadowOpacity: 0.25,
+		// shadowRadius: 4,
+		// elevation: 5,
 	},
 	modalText: {
-		marginBottom: 15,
+		marginBottom: 18,
 		textAlign: "center",
-		color: "red",
+		color: "#67B8F0",
+		fontSize: 20,
 	},
 });

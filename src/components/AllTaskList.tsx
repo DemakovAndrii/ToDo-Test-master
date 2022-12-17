@@ -10,15 +10,14 @@ const AllTaskList = () => {
 	const day = data.getDate();
 
 	const allTasks = useSelector((state: RootState) => state.counter.tasks);
-
-	// const todayTask = allTask.filter((el) => el.date === day);
+	const todayTask = allTasks.filter((el) => el.day === day);
 
 	return (
 		<FlatList
 			showsVerticalScrollIndicator={false}
 			scrollEnabled={true}
 			renderItem={({ item }) => <TaskCard {...item} />}
-			data={allTasks}
+			data={todayTask}
 		/>
 	);
 };
