@@ -17,7 +17,6 @@ import CustomInput from "../components/custom/CustomInput";
 import CustomAddTaskButtom from "../components/custom/CustomAddTaskButtom";
 import { useDispatch } from "react-redux";
 import { add } from "../redux/counterSlice";
-import allTask from "../data/allTask.json";
 import { useNavigation } from "@react-navigation/native";
 
 const CreateTaskScreen = () => {
@@ -38,13 +37,17 @@ const CreateTaskScreen = () => {
 	const dispatch = useDispatch();
 
 	const [value, setValue] = useState("");
+	const [taskDate, setTaskDate] = useState(day);
+	const selectDate = () => {
+		setTaskDate(day + 1);
+		console.log(day, taskDate);
+	};
 
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const addTask = () => {
 		if (value !== "") {
-			allTask.push({ date: day, task: value });
-			dispatch(add({ day, task: value }));
+			dispatch(add({ taskDate, task: value }));
 
 			setValue("");
 
@@ -90,7 +93,12 @@ const CreateTaskScreen = () => {
 			>
 				date
 			</Text>
-			<Text style={[styles.date, { color: themeStyle.color }]}>{day}</Text>
+			<Text
+				style={[styles.date, { color: themeStyle.color }]}
+				onPress={selectDate}
+			>
+				{taskDate}
+			</Text>
 			<CustomAddTaskButtom text="Add Task" onPress={addTask} />
 			<Modal animationType="fade" transparent={true} visible={modalVisible}>
 				<View style={styles.modalPosition}>

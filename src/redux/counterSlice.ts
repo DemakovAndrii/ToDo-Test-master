@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export interface CounterState {
-	tasks: { day: number; task: string }[];
+	tasks: { taskDate: number; task: string }[];
 }
 
 const initialState: CounterState = {
@@ -22,7 +22,7 @@ export const counterSlice = createSlice({
 	name: "counter",
 	initialState,
 	reducers: {
-		add: (state, action: PayloadAction<{ day: number; task: string }>) => {
+		add: (state, action: PayloadAction<{ taskDate: number; task: string }>) => {
 			state.tasks = [...state.tasks, action.payload];
 			AsyncStorage.setItem("tasks", JSON.stringify(state.tasks));
 		},
