@@ -5,12 +5,8 @@ import {
 	useColorScheme,
 	SafeAreaView,
 	StatusBar,
-	Button,
 	StyleSheet,
-	Alert,
 	Modal,
-	Pressable,
-	TextInput,
 } from "react-native";
 import Palette from "../styles/Palette";
 import CustomInput from "../components/custom/CustomInput";
@@ -18,6 +14,7 @@ import CustomAddTaskButtom from "../components/custom/CustomAddTaskButtom";
 import { useDispatch } from "react-redux";
 import { add } from "../redux/counterSlice";
 import { useNavigation } from "@react-navigation/native";
+import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 
 const CreateTaskScreen = () => {
 	const scheme = useColorScheme() === "dark";
