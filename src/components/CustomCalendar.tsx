@@ -49,7 +49,7 @@ const customCalendar = props => {
                 ? Palette.darkTh.text
                 : Palette.lightTh.text,
               arrowColor: 'red',
-              selectedDayBackgroundColor: 'red',
+              selectedDayBackgroundColor: 'green',
             }}
             onDayPress={day => setTestDate(day.day)}
           />
