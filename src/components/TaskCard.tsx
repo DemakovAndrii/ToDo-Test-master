@@ -1,5 +1,5 @@
 import {Text, useColorScheme, View, StyleSheet} from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import Palette from '../styles/Palette';
 // import { PanGestureHandler } from 'react-native-gesture-handler'
 // import Animated, {
@@ -11,9 +11,10 @@ import Palette from '../styles/Palette';
 
 type Props = {
   task: string;
+  completed: boolean;
 };
 
-const TaskCard: FC<Props> = ({task}) => {
+const TaskCard: FC<Props> = ({task, completed}) => {
   const scheme = useColorScheme() === 'dark';
   const themeStyle = {
     backgroundColor: scheme
@@ -38,7 +39,10 @@ const TaskCard: FC<Props> = ({task}) => {
   //     }
   //   ]
   // }))
-
+  const test = () => {
+    completed = !completed;
+    console.log(completed);
+  };
   return (
     // <PanGestureHandler onGestureEvent={panGesture}>
 
@@ -49,6 +53,10 @@ const TaskCard: FC<Props> = ({task}) => {
       <Text style={[styles.taskItemText, {color: themeStyle.color}]}>
         {task && task.length > 79 ? `${task.slice(0, 79)}...` : task}
       </Text>
+      <Text onPress={test} style={{color: themeStyle.color}}>
+        {completed ? '++++++++++++++++' : '----------------'}
+      </Text>
+      <Text style={{color: themeStyle.color}}>delete</Text>
     </View>
 
     // </Animated.View>
@@ -59,6 +67,13 @@ const TaskCard: FC<Props> = ({task}) => {
 export default TaskCard;
 
 const styles = StyleSheet.create({
-  taskItem: {padding: 14, marginBottom: 10, borderRadius: 20},
+  taskItem: {
+    padding: 14,
+    marginBottom: 10,
+    borderRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   taskItemText: {fontSize: 18},
+  close: {top: 0, right: 0},
 });

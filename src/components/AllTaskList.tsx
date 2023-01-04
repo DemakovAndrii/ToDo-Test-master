@@ -10,6 +10,7 @@ const AllTaskList = () => {
 
   const allTasks = useSelector((state: RootState) => state.counter.tasks);
   const todayTask = allTasks.filter(el => el.selectDay === day);
+  console.log(day);
 
   return (
     <View>

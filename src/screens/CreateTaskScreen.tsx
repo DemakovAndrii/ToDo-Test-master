@@ -22,28 +22,34 @@ const CreateTaskScreen = () => {
     backgroundColor: scheme
       ? Palette.darkTh.backGround
       : Palette.lightTh.backGround,
+    cardColor: scheme ? Palette.darkTh.cardColor : Palette.lightTh.cardColor,
     color: scheme ? Palette.darkTh.text : Palette.lightTh.text,
   };
 
   const data = new Date();
-  // const year = data.getFullYear()
-  // const month = data.getMonth()
-  const day: number = data.getDate();
+  const todayDae: number = data.getDate();
+  // const month = data.getMonth();
+  // const year = data.getFullYear();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const [value, setValue] = useState('');
-  const [selectDay, setSelectDay] = useState(day);
+  const [selectDay, setSelectDay] = useState(todayDae);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [calendarModalVisible, setCalendarModalVisible] = useState(false);
+
+  const selectDate = day => {
+    setCalendarModalVisible(false);
+    setSelectDay(day.day);
+    console.log(day.dateString);
+  };
 
   const addTask = () => {
     if (value !== '') {
-      dispatch(add({selectDay, task: value}));
-
+      dispatch(add({selectDay, task: value, completed: false}));
       setValue('');
-
       setModalVisible(true);
 
       setTimeout(() => {
@@ -69,24 +75,40 @@ const CreateTaskScreen = () => {
           styles.text,
           {
             color: themeStyle.color,
+            paddingTop: 10,
           },
         ]}>
         task
       </Text>
       <CustomInput setValue={setValue} value={value} />
-      <Text
-        style={[
-          styles.text,
-          {
-            color: themeStyle.color,
-          },
-        ]}>
-        date
-      </Text>
-      <Text style={[styles.date, {color: themeStyle.color}]}>{selectDay}</Text>
+      <View>
+        <CustomCalendar
+          visible={calendarModalVisible}
+          onDateSelected={selectDate}
+        />
+        <Text
+          style={[
+            styles.text,
+            {
+              color: themeStyle.color,
+              paddingTop: 50,
+            },
+          ]}>
+          date
+        </Text>
+        <Text
+          style={[
+            styles.date,
+            {
+              color: themeStyle.color,
+              backgroundColor: themeStyle.cardColor,
+            },
+          ]}
+          onPress={() => setCalendarModalVisible(true)}>
+          {selectDay}
+        </Text>
+      </View>
       <CustomAddTaskButtom text="Add Task" onPress={addTask} />
-      <CustomCalendar onDayPress={day => setSelectDay(day.day)} />
-
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalPosition}>
           <View style={styles.modalView}>
@@ -103,7 +125,14 @@ export default CreateTaskScreen;
 const styles = StyleSheet.create({
   safeAreaView: {paddingHorizontal: 10, height: '100%'},
   text: {fontSize: 28, paddingBottom: 10},
-  date: {fontSize: 28, paddingBottom: 50},
+  date: {
+    fontSize: 28,
+    marginBottom: 50,
+    paddingLeft: 15,
+    paddingTop: 8,
+    borderRadius: 20,
+    height: 55,
+  },
 
   modalPosition: {
     flex: 1,
@@ -117,14 +146,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingHorizontal: 20,
     alignItems: 'center',
-    // shadowColor: "#000",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 5,
   },
   modalText: {
     marginBottom: 18,

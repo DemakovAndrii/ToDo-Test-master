@@ -1,61 +1,44 @@
-import React, {useState} from 'react';
-import {
-  Modal,
-  useColorScheme,
-  TouchableOpacity,
-  Button,
-  Text,
-} from 'react-native';
+import React from 'react';
+import {Modal, useColorScheme, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import Palette from '../styles/Palette';
 
-const customCalendar = props => {
+const customCalendar = ({visible, onDateSelected}) => {
   const scheme = useColorScheme() === 'dark';
-  const [calendarModal, setCalendarModalModal] = useState(!false);
 
-  const closeModal = () => {
-    setCalendarModalModal(false);
-  };
-
-  const data = new Date();
-  const day: number = data.getDate();
-
-  const [testDate, setTestDate] = useState(day);
   return (
     <>
-      <Modal visible={calendarModal} transparent={true} animationType="fade">
-        <TouchableOpacity
-          // onPress={closeModal}
+      <Modal visible={visible} transparent={true} animationType="fade">
+        <View
           style={{
             flex: 1,
             justifyContent: 'center',
-            backgroundColor: 'rgba(218, 14, 14, 0.3)',
+            backgroundColor: scheme
+              ? 'rgba(10, 10, 10, 0.5)'
+              : 'rgba(0,0, 0, 0)',
           }}>
           <Calendar
             disableAllTouchEventsForDisabledDays={true}
-            {...props}
+            firstDay={1}
             style={{
               borderRadius: 15,
-              margin: 12,
-              elevation: 5,
+              margin: 30,
             }}
             theme={{
               calendarBackground: scheme
-                ? Palette.darkTh.backGround
-                : Palette.lightTh.backGround,
+                ? Palette.darkTh.cardColor
+                : Palette.lightTh.cardColor,
               dayTextColor: scheme ? Palette.darkTh.text : Palette.lightTh.text,
               textDisabledColor: scheme ? '#555' : '#999',
               monthTextColor: scheme
                 ? Palette.darkTh.text
                 : Palette.lightTh.text,
-              arrowColor: 'red',
-              selectedDayBackgroundColor: 'green',
+              arrowColor: scheme ? Palette.darkTh.text : Palette.lightTh.text,
+              selectedDayBackgroundColor: '#51D8D0',
             }}
-            onDayPress={day => setTestDate(day.day)}
+            onDayPress={onDateSelected}
           />
-          <Button title="close" onPress={closeModal} />
-          <Text style={{fontSize: 24, color: 'white'}}>{testDate}</Text>
-        </TouchableOpacity>
+        </View>
       </Modal>
     </>
   );
