@@ -43,7 +43,7 @@ const CreateTaskScreen = () => {
   const selectDate = day => {
     setCalendarModalVisible(false);
     setSelectDay(day.day);
-    console.log(day.dateString);
+    console.log(day);
   };
 
   const addTask = () => {
@@ -109,8 +109,16 @@ const CreateTaskScreen = () => {
         </Text>
       </View>
       <CustomAddTaskButtom text="Add Task" onPress={addTask} />
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.modalPosition}>
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View
+          style={[
+            styles.modalPosition,
+            {
+              backgroundColor: scheme
+                ? 'rgba(10, 10, 10, 0.5)'
+                : 'rgba(0,0, 0, 0)',
+            },
+          ]}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Your task is added</Text>
           </View>
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#f3f3f3',
     borderRadius: 20,
     paddingTop: 20,
     paddingBottom: 10,

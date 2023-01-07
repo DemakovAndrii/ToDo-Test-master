@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {FlatList, View, Text} from 'react-native';
 import TaskCard from './TaskCard';
 import {useSelector} from 'react-redux';
@@ -10,14 +10,18 @@ const AllTaskList = () => {
 
   const allTasks = useSelector((state: RootState) => state.counter.tasks);
   const todayTask = allTasks.filter(el => el.selectDay === day);
-  console.log(day);
+
+  const scrollRef = useRef(null);
 
   return (
     <View>
       <FlatList
+        ref={scrollRef}
         showsVerticalScrollIndicator={false}
         scrollEnabled={true}
-        renderItem={({item}) => <TaskCard {...item} />}
+        renderItem={({item}) => (
+          <TaskCard {...item} simultaneousHandlers={scrollRef} />
+        )}
         data={todayTask}
       />
     </View>

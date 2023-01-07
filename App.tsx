@@ -8,6 +8,7 @@ import Palette from './src/styles/Palette';
 import CustomBackButtom from './src/components/custom/CustomBackButtom';
 import {store} from './src/redux/store';
 import {Provider} from 'react-redux';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,5 +45,11 @@ const App = () => {
     </Provider>
   );
 };
-
-export default App;
+export default () => {
+  return (
+    <GestureHandlerRootView style={{flex: 1}}>
+      <App />
+    </GestureHandlerRootView>
+  );
+};
+// export default App;
